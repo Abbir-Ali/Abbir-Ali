@@ -1,10 +1,17 @@
-.chs-top-bar{
+/* Top Bar */
+.chs-top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding:1rem 3rem;
+    padding: 1rem 3rem;
     background-color: gainsboro;
+    text-align: center;
 }
+.chs-sub-heading {
+    flex-grow: 1;
+    text-align: center;
+}
+
 .chs-button-yellow{
     text-decoration: none;
     overflow:hidden;
@@ -71,9 +78,10 @@
 .chs-button-black:hover{
     color: black;
 }
-.main-image{
-    max-width:100%;
-    height:auto;
+/* Images */
+.main-image {
+    max-width: 100%;
+    height: auto;
     display: block;
 }
 .mobile{
