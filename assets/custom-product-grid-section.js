@@ -2,11 +2,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalOverlay = document.querySelector(".my-modal-overlay");
     const modalContainer = document.querySelector(".my-modal-content");
 
+    let productID; // ✅ Fixed syntax error
+
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("circle")) {
+            productID = event.target.getAttribute("data-product-id"); // ✅ Fixed `this`
             let productHandle = event.target.getAttribute("data-product-handle");
 
-            console.log("Fetching Product:", productHandle);
+            console.log("Fetching Product:", productHandle, "Product ID:", productID);
 
             fetch(`/products/${productHandle}.json`)
                 .then(response => response.json())
@@ -14,19 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     let product = data.product;
                     console.log("Fetched product:", product);
 
-                    // ✅ Check if images exist and set a fallback
+                    // ✅ Get featured image or fallback image
                     let productImage = product.image && product.image.src
                         ? product.image.src
                         : (product.images && product.images.length > 0
                             ? product.images[0].src
                             : "{{ 'product1.png' | asset_url }}");
 
-                    // ✅ Check if the product has variants before accessing them
+                    // ✅ Get product variants safely
                     let firstVariant = product.variants && product.variants.length > 0
                         ? product.variants[0]
                         : { price: "N/A", id: "" };
 
-                    // ✅ Generate options dynamically
+                    // ✅ Generate options dropdown
                     let optionsHTML = "";
                     if (product.options && product.options.length > 0) {
                         product.options.forEach((option, index) => {
@@ -41,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         });
                     }
 
-                    // ✅ Update modal content only after fetching product data
+                    // ✅ Populate the modal with product details
                     modalContainer.innerHTML = `
                         <div class="modal-image">
                             <img src="${productImage}" alt="${product.title}">
@@ -57,7 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // ✅ Show the modal
                     modalOverlay.classList.add("active");
-
                 })
                 .catch(error => {
                     console.error("Error fetching product data:", error);
