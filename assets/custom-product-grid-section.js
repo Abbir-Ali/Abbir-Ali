@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalOverlay = document.querySelector(".my-modal-overlay");
     const modalContainer = document.querySelector(".my-modal-content");
 
+  let productID,
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("circle")) {
           productID= this.getAttribute("data-product-id");
