@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Attach event listener to all + icons
     document.querySelectorAll(".circle").forEach(circle => {
         circle.addEventListener("click", function () {
             let productId = this.getAttribute("data-product-id");
@@ -7,20 +8,29 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Product ID:", productId);
             console.log("Product Handle:", productHandle);
 
-            // Pass to modal function
             openQuickView(productId, productHandle);
         });
     });
 });
 
+// Function to Open Quick View Modal
 function openQuickView(productId, productHandle) {
-    // Now you have both ID and Handle
-    console.log(`Opening Quick View for Product: ID=${productId}, Handle=${productHandle}`);
+    let modal = document.getElementById("quickViewModal");
 
-    // Ensure the modal function is defined
-    if (typeof showModal === "function") {
-        showModal(productId, productHandle);
-    } else {
-        console.error("Modal function not found.");
+    if (!modal) {
+        console.error("Quick View Modal not found!");
+        return;
+    }
+
+    // Show Modal
+    modal.classList.add("active");
+}
+
+// Function to Close Quick View Modal
+function closeQuickView() {
+    let modal = document.getElementById("quickViewModal");
+
+    if (modal) {
+        modal.classList.remove("active");
     }
 }
