@@ -1,4 +1,5 @@
 {{ 'custom-product-grid-section.css' | asset_url | stylesheet_tag }}
+<script src="{{ "custom-product-grid-section.js" | asset_url }}" defer=defer ></script>
 
 <div class="cpg-product-container">
   {% if section.settings.heading != blank %}  
@@ -16,7 +17,7 @@
               fetchpriority: "auto"
             }}
 
-            <div class="circle" style="top: {{ block.settings.top }}%; left: {{ block.settings.left }}%;">
+            <div class="circle" data-product-handle={{ block.settings.product.handle }} data-product-id="{{ block.settings.product.id }}" style="top: {{ block.settings.top }}%; left: {{ block.settings.left }}%;">
               +
             </div>
           {% else %}
