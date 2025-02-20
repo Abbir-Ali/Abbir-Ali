@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("circle")) {
+          productID= this.getAttribute("data-product-id");
             let productHandle = event.target.getAttribute("data-product-handle");
 
             console.log("Fetching Product:", productHandle);
