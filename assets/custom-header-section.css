@@ -1,23 +1,17 @@
-/* General Styles */
-.header-banner {
-    background-color: #f5f5f5;
-    padding: 20px 0;
-}
-
-/* Top Bar */
-.chs-top-bar {
+.chs-top-bar{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 3rem;
+    padding:1rem 3rem;
     background-color: gainsboro;
 }
-
-/* Buttons */
-.chs-button-yellow {
+.chs-button-yellow{
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    color: black;
+    overflow:hidden;
+    padding:0.5rem 1rem;
+    z-index: 1;
+    color:black;
+    position: relative;
     background-color: yellow;
     display: flex;
     justify-content: center;
@@ -25,30 +19,25 @@
     gap: 1rem;
     max-width: max-content;
     margin: 0 auto;
-    position: relative;
-    overflow: hidden;
 }
-
-.chs-button-yellow::before {
-    content: '';
+.chs-button-yellow::before{
+    content:'';
     background-color: black;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top:0;
+    left:0;
+    width:100%;
     height: 100%;
-    transform: translate(-110%, 0%);
-    z-index: -1;
+    transform: translate(-110%,0%);
+    z-index:-1;
     transition: transform 0.45s;
 }
-
-.chs-button-yellow:hover::before {
-    transform: translate(0%, 0%);
+.chs-button-yellow:hover::before{
+    transform: translate(0%,0%);
 }
-.chs-button-yellow:hover {
-    color: white;
+.chs-button-yellow:hover{
+    color:white;
 }
-
 .chs-button-black {
     position: relative;
     overflow: hidden;
@@ -60,10 +49,9 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    z-index: 1;
+    z-index:1;
     max-width: max-content;
 }
-
 .chs-button-black::before {
     content: '';
     background-color: white;
@@ -80,44 +68,73 @@
 .chs-button-black:hover::before {
     transform: translate(0%, 0%);
 }
-.chs-button-black:hover {
+.chs-button-black:hover{
     color: black;
 }
-
-/* Images */
-.main-image {
-    max-width: 100%;
-    height: auto;
+.main-image{
+    max-width:100%;
+    height:auto;
     display: block;
 }
-
-/* Mobile & Desktop Visibility */
-.mobile {
-    display: none;
+.mobile{
+    display:none;
 }
-.desktop {
-    display: block;
+.desktop{
+    display:block;
 }
 .mobile-flex {
     display: none;
 }
+
 .desktop-flex {
     display: block;
 }
-
-/* Image & Content Layout */
-.chs-image-content {
+.chs-h1{
+    margin-bottom: 5px;
+}
+.chs-bottom-bar{
+    padding: 0.3rem 1.5rem;
+    background-color: gainsboro;
+    text-align: center;
+}
+.chs-bottom-text{
+    margin:0px;
+}
+.chs-image-content{
     position: relative;
 }
-.chs-content-desktop {
+.chs-content-desktop{
     position: absolute;
     max-width: 30%;
     bottom: 15%;
     left: 5%;
 }
+.placeholder-svg svg{
+    display:block;
+}
+@media screen and (max-width:768px){
+.mobile {
+        display: block;
+    }
 
-/* Mobile Menu */
-.mobile-menu {
+.desktop {
+        display: none;
+    }
+.mobile-flex {
+    display: flex;
+}
+
+.desktop-flex {
+    display: none;
+}
+.chs-logo-wrapper{
+    flex: 1 1 60%;
+    text-align: center;
+    }
+.menu-icon,.chs-sub-heading{
+    flex: 1 1 20%;
+   }
+.mobile-menu{
     position: absolute;
     transform: translateY(-110%);
     z-index: 1;
@@ -130,61 +147,44 @@
     top: 0;
     transition: transform 0.45s;
     box-shadow: 0 0px 9px gray;
-}
-.mobile-menu-content {
+   }
+.mobile-menu-content{
     padding: 3rem;
     text-align: center;
-}
-.mobile-menu.active {
+   }
+.mobile-menu.active{
     transform: translateY(0%);
     top: 130px;
-}
-
-/* Icons */
-.close-icon {
-    display: none;
-}
-.open-icon {
-    display: block;
-}
-.close-icon:hover, .open-icon:hover {
-    cursor: pointer;
-}
-
-/* Mobile Adjustments */
-@media screen and (max-width: 768px) {
-    .mobile {
-        display: block;
-    }
-    .desktop {
-        display: none;
-    }
-    .mobile-flex {
-        display: flex;
-    }
-    .desktop-flex {
-        display: none;
-    }
-    .chs-logo-wrapper {
-        flex: 1 1 60%;
-        text-align: center;
-    }
-    .menu-icon, .chs-sub-heading {
-        flex: 1 1 20%;
-    }
-    .chs-content-mobile {
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        max-width: 80%;
-        margin: 1rem auto;
-        text-align: center;
-    }
-    .chs-button-black-wrapper {
-        position: absolute;
-        bottom: 15%;
-        left: 0;
-        width: 100%;
-        max-width: 100%;
-    }
+  }
+  .close-icon{
+    display:none;
+  }
+  .open-icon{
+    display:block;
+  }
+  .close-icon:hover,.open-icon:hover{
+    cursor:pointer;
+  }
+  .chs-content-mobile{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-width: 80%;
+    margin: 1rem auto;
+    text-align: center;
+  }
+  .chs-image{
+    position: relative;
+  }
+  .chs-button-black-wrapper{
+    position: absolute;
+    bottom: 15%;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .chs-button-black{
+    margin:0 auto;
+    padding:0rem 1rem;
+  }
 }
