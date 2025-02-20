@@ -22,7 +22,8 @@ If(circle) {
         modalContainer ? (modalContainer.innerHTML = modalContent) : "";
         document.body.style.overyflow = "hidden";
         option1 = document.querySelectorAll(".mc-color");
-        
+         option1 = document.querySelectorAll(".mc-select");
+        selectMain = document.querySelectorAll("select")
         
       })
     })
