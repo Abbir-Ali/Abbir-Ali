@@ -2,8 +2,11 @@
 .cpg-product-container {
     padding: 40px 20px;
     text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Heading */
 .cpg-product-container h1 {
     font-size: 2rem;
     font-weight: bold;
@@ -14,12 +17,10 @@
 /* Grid Container */
 .cpg-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Auto-fit ensures responsiveness */
     gap: 20px;
     justify-content: center;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    align-items: stretch; /* Makes all items have equal height */
 }
 
 /* Grid Item */
@@ -30,28 +31,26 @@
     background: #f9f9f9;
     padding: 10px;
     transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%; /* Ensures equal height */
 }
 
-.cpg-item:hover {
-    transform: translateY(-5px);
-}
-
-/* Product Images */
+/* Product Image */
 .cpg-image {
     width: 100%;
-    height: auto;
+    height: 250px; /* Fixed height for all images */
+    object-fit: cover; /* Ensures images fill the space without distortion */
     border-radius: 5px;
-    display: block;
 }
 
 /* Placeholder for Missing Images */
-.product-placeholder-svg {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #eee;
+.product-placeholder-svg img {
     width: 100%;
     height: 250px;
+    object-fit: cover;
     border-radius: 5px;
 }
 
@@ -77,15 +76,20 @@
     background-color: #cc5200;
 }
 
-/* Responsive Design */
+/* Responsive Grid Layout */
+@media screen and (min-width: 769px) {
+    .cpg-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 items per row on desktop */
+    }
+}
+
 @media screen and (max-width: 768px) {
-    .cpg-product-container {
-        padding: 20px;
+    .cpg-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
     }
 
-    .cpg-container {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 15px;
+    .cpg-product-container {
+        padding: 20px;
     }
 
     .cpg-product-container h1 {
@@ -105,6 +109,6 @@
     }
 
     .cpg-container {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(2, 1fr); /* Keep 2 columns for smaller screens */
     }
 }
