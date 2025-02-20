@@ -1,22 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Quick View script loaded.");
-
-    // Event Delegation for dynamically loaded elements
-    document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("circle")) {
-            let productId = event.target.getAttribute("data-product-id");
-            let productHandle = event.target.getAttribute("data-product-handle");
-
-            console.log("Clicked on + icon!"); // Debugging
-            console.log("Product ID:", productId);
-            console.log("Product Handle:", productHandle);
+    document.querySelectorAll(".circle").forEach(circle => {
+        circle.addEventListener("click", function () {
+            let productHandle = this.getAttribute("data-product-handle");
+            console.log("Fetching product:", productHandle);
 
             openQuickView(productHandle);
-        }
+        });
     });
 });
 
-// Function to Open Quick View Modal & Fetch Product Data
+// Function to Fetch and Show Product Data
 function openQuickView(productHandle) {
     let modal = document.getElementById("quickViewModal");
 
@@ -25,6 +18,7 @@ function openQuickView(productHandle) {
         return;
     }
 
+    // Shopify API URL to Fetch Product Data
     let productURL = `/products/${productHandle}.json`;
 
     fetch(productURL)
@@ -32,23 +26,22 @@ function openQuickView(productHandle) {
         .then(data => {
             let product = data.product;
 
-            console.log("Fetched product:", product);
-
-            // Generate product options HTML
+            // Build Product Options if Available
             let optionsHTML = "";
             if (product.options && product.options.length > 0) {
                 optionsHTML = `<div class="modal-options"><strong>Options:</strong>`;
-                product.options.forEach((option, index) => {
-                    optionsHTML += `<label>${option}: 
-                        <select class="product-option" data-option-name="${option}">
-                            ${product.variants.map(variant => `<option>${variant.options[index]}</option>`).join("")}
-                        </select>
-                    </label>`;
+                product.options.forEach(option => {
+                    optionsHTML += `<label>${option.name}: 
+                    <select>`;
+                    option.values.forEach(value => {
+                        optionsHTML += `<option>${value}</option>`;
+                    });
+                    optionsHTML += `</select></label>`;
                 });
                 optionsHTML += `</div>`;
             }
 
-            // Update modal content dynamically
+            // Replace Dummy Content with Product Data
             document.querySelector(".my-modal-content").innerHTML = `
                 <div class="modal-image">
                     <img src="${product.images[0]}" alt="${product.title}">
@@ -72,8 +65,22 @@ function openQuickView(productHandle) {
 
 // Function to Close Quick View Modal
 function closeQuickView() {
-    let modal = document.getElementById("quickViewModal");
-    if (modal) {
-        modal.classList.remove("active");
-    }
+    document.getElementById("quickViewModal").classList.remove("active");
+}
+
+// Function to Add to Cart
+function addToCart(variantId) {
+    fetch("/cart/add.js", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: variantId, quantity: 1 })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert("Product added to cart!");
+        closeQuickView();
+    })
+    .catch(error => console.error("Error adding to cart:", error));
 }
