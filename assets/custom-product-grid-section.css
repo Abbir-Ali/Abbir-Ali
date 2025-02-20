@@ -1,0 +1,110 @@
+/* General Container */
+.cpg-product-container {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.cpg-product-container h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Grid Container */
+.cpg-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Grid Item */
+.cpg-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f9f9f9;
+    padding: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.cpg-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Product Images */
+.cpg-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+}
+
+/* Placeholder for Missing Images */
+.product-placeholder-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eee;
+    width: 100%;
+    height: 250px;
+    border-radius: 5px;
+}
+
+/* Circle Icon */
+.circle {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #ff6600;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.circle:hover {
+    background-color: #cc5200;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .cpg-product-container {
+        padding: 20px;
+    }
+
+    .cpg-container {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
+
+    .cpg-product-container h1 {
+        font-size: 1.8rem;
+    }
+
+    .circle {
+        width: 25px;
+        height: 25px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cpg-product-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .cpg-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}
