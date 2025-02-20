@@ -139,6 +139,11 @@
     flex: 1 1 60%;
     text-align: center;
     }
+  
+  .chs-logo-wrapper h1 a {
+    color: black;
+    font-weight: bold;
+  }
 .menu-icon,.chs-sub-heading{
     flex: 1 1 20%;
    }
