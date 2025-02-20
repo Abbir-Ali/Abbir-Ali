@@ -1,6 +1,6 @@
-cont openIcon = document.querySelector(".open-icon");
-cont closeIcon = document.querySelector(".close-icon");
-cont mobileMenu = document.querySelector(".mobile-menu");
+const openIcon = document.querySelector(".open-icon");
+const closeIcon = document.querySelector(".close-icon");
+const mobileMenu = document.querySelector(".mobile-menu");
 
 if (openIcon) {
   openIcon.addEventListener("click", function (e) {
