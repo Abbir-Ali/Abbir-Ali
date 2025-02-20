@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     if (modalOverlay) modalOverlay.classList.add("active");
 
-                  let productImage = product.featured_image ? product.featured_image : "{{ 'product1.png' | asset_url }}";
+                 let productImage = product.image && product.image.src ? product.image.src : "{{ 'product1.png' | asset_url }}";
+
 
 
                     let optionsHTML = "";
