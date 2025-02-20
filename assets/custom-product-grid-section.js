@@ -8,16 +8,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log("Fetching Product:", productHandle);
 
-            fetch(`/products/${productHandle}.json`)
-                .then(response => response.json())
-                .then(data => {
-                    let product = data.product;
-                    console.log("Fetched product:", product);
+           fetch(`/products/${productHandle}.json`)
+    .then(response => response.json())
+    .then(data => {
+        let product = data.product;
+        console.log("Fetched product:", product);
 
-                    if (modalOverlay) modalOverlay.classList.add("active");
+        // Check if images exist
+        console.log("Product Images:", product.images);
+        console.log("Product Variants:", product.variants);
 
-                    // ✅ Fix: Check if featured image exists, otherwise fallback to placeholder
-                    let productImage = product.image && product.image.src ? product.image.src : "{{ 'product1.png' | asset_url }}";
+        if (!product.images || product.images.length === 0) {
+            console.warn("No images found for this product.");
+        }
+
+        if (!product.variants || product.variants.length === 0) {
+            console.warn("No variants found for this product.");
+        }
+
+        if (!product.image && (!product.images || product.images.length === 0)) {
+            console.error("Both product.image and product.images are missing!");
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching product data:", error);
+    });
 
                     let optionsHTML = "";
                     product.options.forEach((option, index) => {
