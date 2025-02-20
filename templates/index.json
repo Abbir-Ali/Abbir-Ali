@@ -22,9 +22,74 @@
         "desktop_image": "shopify://shop_images/hero_wallpaper.png",
         "mobile_image": "shopify://shop_images/Untitled_design.png"
       }
+    },
+    "custom_product_grid_XTCzWt": {
+      "type": "custom-product-grid",
+      "blocks": {
+        "product_grid_bgdUjf": {
+          "type": "product-grid",
+          "settings": {
+            "product": "orange-wide-leg",
+            "top": 64,
+            "left": 52
+          }
+        },
+        "product_grid_J37Uhj": {
+          "type": "product-grid",
+          "settings": {
+            "product": "tailored-jacket",
+            "top": 64,
+            "left": 52
+          }
+        },
+        "product_grid_NkHYQb": {
+          "type": "product-grid",
+          "settings": {
+            "product": "accordion-pleated-dress",
+            "top": 20,
+            "left": 20
+          }
+        },
+        "product_grid_AG73gi": {
+          "type": "product-grid",
+          "settings": {
+            "product": "green-trench-coat",
+            "top": 20,
+            "left": 20
+          }
+        },
+        "product_grid_aGRCXb": {
+          "type": "product-grid",
+          "settings": {
+            "product": "tennis-blue-t-shirt",
+            "top": 52,
+            "left": 20
+          }
+        },
+        "product_grid_BX7kr4": {
+          "type": "product-grid",
+          "settings": {
+            "product": "long-sleeve-tennis-top",
+            "top": 56,
+            "left": 40
+          }
+        }
+      },
+      "block_order": [
+        "product_grid_bgdUjf",
+        "product_grid_J37Uhj",
+        "product_grid_NkHYQb",
+        "product_grid_AG73gi",
+        "product_grid_aGRCXb",
+        "product_grid_BX7kr4"
+      ],
+      "settings": {
+        "heading": "Tisso Vision In The Wild"
+      }
     }
   },
   "order": [
-    "header_banner_ymjaKx"
+    "header_banner_ymjaKx",
+    "custom_product_grid_XTCzWt"
   ]
 }
