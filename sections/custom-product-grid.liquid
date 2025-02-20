@@ -21,7 +21,9 @@
             </div>
           {% else %}
             <div class="product-placeholder-svg">
-              {{ 'product1.png' | image_tag }}
+             <!-- Default Image from Assets -->
+            <img src="{{ 'product1.png' | asset_url }}" alt="Default Product Image" class="cpg-image">
+              
             </div>
           {% endif %}
         </div>
