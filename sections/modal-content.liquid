@@ -1,6 +1,250 @@
-{% schema %}
-  {
-    "name": "Section name",
-    "settings": []
+<div class="image-title">
+  <div class="mc-featured-image">
+    {% assign img_height = product.featured_image.width | divided_by: product.featured_image.aspect_ratio  %}
+    {{
+      product.featured_image
+      | image_url: width: product.featured_image.width
+      | image_tag:
+        width: product.featured_image.width,
+        height: img_height,
+        class: 'mc-item-image',
+        fetchpriority: 'auto'
+    }}
+  </div>
+  <div class="mc-info">
+    <h3 class="h2">{{ product.title }}</h3>
+    {% if product.first_available_variant.compare_at_price > product.first_available_variant.price %}
+      <p>
+        <span class="mc-regular-price">{{ product.first_available_variant.price | money }}</span>
+        <span class="mc-compare-price">{{ product.first_available_variant.compare_at_price | money }}</span>
+      </p>
+    {% else %}
+      <p>
+        <span class="mc-regular-price">{{ product.first_available_variant.price | money }}</span>
+      </p>
+    {% endif %}
+    {% if product.description != blank %}
+      {{ product.description }}
+    {% endif %}
+  </div>
+</div>
+{% assign formId = 'product-form-' | append: product.id %}
+<div class="mc-form">
+  {%- form 'product', product, id: formId, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+    <span class="product-options-size" style="display:none;">{{ product.options.size }}</span>
+    {% if product.has_only_default_variant %}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    {% else %}
+      <select name="id" style="display:none;">
+        {% for variant in product.variants %}
+          <option
+            {% if variant.id == product.selected_or_first_available_variant.id %}
+              selected
+            {% endif %}
+            value="{{variant.id}}"
+            data-price="{{variant.price | money}}"
+          >
+            {{ variant.title }}
+          </option>
+        {% endfor %}
+      </select>
+      <div class="mc-option">
+        {%- for option in product.options_with_values -%}
+          {% if option.name == 'Color' or option.name == 'color' %}
+            <div class="mc-product-form__input">
+              {{ option.name }}
+            </div>
+
+            <div class="mc-color-pills">
+              {%- for value in option.values -%}
+                <div class="container-{{option.name}}">
+                  <input
+                    type="radio"
+                    class="mc-color"
+                    name="{{option.name}}-{{option.position}}"
+                    value="{{ value | escape }}"
+                    {% if value.selected %}
+                      checked
+                    {% endif %}
+                  >
+                  <label>
+                    <div class="color-container" style="background-color:{{value}};width:20px;">
+                      <span style="visibility: hidden;">{{ value }}</span>
+                    </div>
+                    <div class="{{option.name}}-{{option.position}}">
+                      {{ value }}
+                    </div>
+                  </label>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="mc-product-form__input">
+              {{ option.name }}
+            </div>
+            <select id="Option-{{ product.id }}-{{ forloop.index0 }}" class="mc-select">
+              {%- for value in option.values -%}
+                <option
+                  value="{{ value | escape }}"
+                  {% if value.selected %}
+                    selected
+                  {% endif %}
+                >
+                  {{- value -}}
+                </option>
+              {% endfor %}
+            </select>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    <button
+      id="ProductSubmitButton-{{ product.id }}"
+      type="submit"
+      name="add"
+      class="mc-product-form__submit mc-button"
+      {% if product.selected_or_first_available_variant.available == false
+        or product.selected_or_first_available_variant == null
+      %}
+        disabled
+      {% endif %}
+    >
+      <span>
+        {%- if product.selected_or_first_available_variant == null -%}
+          {{ 'products.product.unavailable' | t }}
+        {%- elsif product.selected_or_first_available_variant.available == false -%}
+          {{ 'products.product.sold_out' | t }}
+        {%- else -%}
+          {{ 'products.product.add_to_cart' | t }}
+        {%- endif -%}
+      </span>
+      {% render 'arrow-icon' %}
+    </button>
+  {% endform %}
+</div>
+<style>
+  .image-title{
+      display: flex;
+      justify-content: space-between;
+      align-items: top;
+      gap:8px;
+    }
+    .mc-featured-image{
+       flex:1 1 40%;
+    }
+    .mc-info{
+      flex:1 1 60%;
+    }
+    .mc-featured-image img{
+      display: block;
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .mc-info .h2{
+      margin:0px 0px 6px 0px;
+    }
+    .mc-info p{
+      margin:6px 0px;
+      line-height: 1;
+      padding-left: 10px;
+    }
+    .mc-regular-price{
+      font-weight: bold;
+    }
+    .mc-compare-price{
+     text-decoration: line-through;
+    }
+    input:hover,select:hover,button:hover{
+      cursor:pointer;
+    }
+    .mc-product-form__input{
+      font-weight:bolder;
+      font-size:18px;
+      text-transform: capitalize;
+    }
+    .mc-color-pills{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+    }
+  .mc-color{
+      position: absolute;
+      width: 100%;
+      /* height: 100%; */
+      height: 31px;
+      opacity: 0;
   }
-{% endschema %}
+  .mc-color:checked + label .color-1{
+     background-color:black;
+     color:white;
+     transition: background-color 0.45s ease-in;
+  }
+  .mc-color-pills label{
+      display: flex;
+      justify-content: flex-start;
+      align-items: normal;
+      min-width: 50%;
+      border: 1px solid black;
+  }
+  .color-1{
+      padding: 1rem 0rem 1rem 1rem;
+      text-transform: capitalize;
+      font-weight: bold;
+      font-size: 14px;
+      width: 100%;
+  }
+  .container-color{
+      flex:1 1 50%;
+      flex: 1 1 50%;
+      overflow: hidden;
+      position: relative;
+  }
+  .mc-select{
+      width: 100%;
+      padding: 1rem;
+      outline: none;
+      border: 1px solid black;
+      margin-bottom: 15px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+  }
+  .mc-button {
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      color: white;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      z-index:1;
+      width: 100%;
+      margin: 0 auto;
+  }
+  .mc-button::before {
+      content: '';
+      background-color: white;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: translate(-110%, 0%);
+      z-index: -1;
+      transition: transform 0.45s;
+  }
+
+  .mc-button:hover::before {
+      transform: translate(0%, 0%);
+  }
+  .mc-button:hover{
+      color: black;
+  }
+
+</style>
