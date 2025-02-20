@@ -12,7 +12,15 @@
     "header_banner_ymjaKx": {
       "type": "header-banner",
       "settings": {
-        "main-image": "shopify://shop_images/hero_wallpaper.png"
+        "logo_text": "TISSUE VISION",
+        "top_bar_text": "Find the ideal gift for your loved ones.",
+        "choose_gift_text": "CHOOSE GIFT",
+        "subheading_text": "The Gift Guide",
+        "subheading_paragraph": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "main_button_text": "SHOP NOW",
+        "bottom_bar_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
+        "desktop_image": "shopify://shop_images/hero_wallpaper.png",
+        "mobile_image": "shopify://shop_images/Mobile_Hero_banner.png"
       }
     }
   },
