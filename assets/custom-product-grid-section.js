@@ -1,129 +1,145 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let selectedOptions = {}; // Stores user-selected options
+    const modalOverlay = document.querySelector(".my-modal-overlay");
+    const modalContainer = document.querySelector(".my-modal-content");
+    let productId, productHandle, selectedOptions = {}, variantId, form;
 
-    // Event Delegation to Listen for Option Changes
-    document.addEventListener("change", function (event) {
-        if (event.target.classList.contains("product-option")) {
-            let optionName = event.target.getAttribute("data-option-name");
-            let optionValue = event.target.value;
+    // Attach event listener for opening modal
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("circle")) {
+            productId = event.target.getAttribute("data-product-id");
+            productHandle = event.target.getAttribute("data-product-handle");
 
-            // Store selected option
-            selectedOptions[optionName] = optionValue;
+            console.log("Fetching Product:", productHandle);
 
-            console.log("Selected Options:", selectedOptions);
+            fetch(`/products/${productHandle}?section_id=modal-content`)
+                .then(response => response.text())
+                .then(text => {
+                    let parser = new DOMParser();
+                    let doc = parser.parseFromString(text, "text/html");
+                    let modalContent = doc.querySelector("#shopify-section-modal-content")
+                        ? doc.querySelector("#shopify-section-modal-content").innerHTML
+                        : "";
 
-            // Update selected variant based on chosen options
-            updateSelectedVariant();
+                    if (modalOverlay) modalOverlay.classList.add("active");
+                    if (modalContainer) modalContainer.innerHTML = modalContent;
+
+                    document.body.style.overflow = "hidden";
+
+                    // Set up event listeners for variant selection
+                    setupVariantSelection();
+                });
         }
     });
-});
 
-// Function to Find & Update Selected Variant
-function updateSelectedVariant() {
-    if (!window.currentProduct) return;
-
-    let productVariants = window.currentProduct.variants;
-
-    // Convert selected options to Shopify format (e.g., "m / red")
-    let selectedVariantTitle = Object.values(selectedOptions).join(" / ").toLowerCase();
-    console.log("Matching Variant Title:", selectedVariantTitle);
-
-    // Find matching variant by title
-    let matchedVariant = productVariants.find(variant => variant.title.toLowerCase() === selectedVariantTitle);
-
-    if (matchedVariant) {
-        console.log("Matched Variant:", matchedVariant);
-
-        // Update price in modal
-        document.querySelector(".modal-price span").innerText = matchedVariant.price;
-
-        // Update ATC button with correct variant ID
-        document.querySelector(".add-to-cart-btn").setAttribute("data-variant-id", matchedVariant.id);
-    } else {
-        console.log("No matching variant found.");
-    }
-}
-
-// Function to Open Quick View & Fetch Product Data
-function openQuickView(productHandle) {
-    let modal = document.getElementById("quickViewModal");
-
-    if (!modal) {
-        console.error("Quick View Modal not found!");
-        return;
-    }
-
-    let productURL = `/products/${productHandle}.json`;
-
-    fetch(productURL)
-        .then(response => response.json())
-        .then(data => {
-            let product = data.product;
-            window.currentProduct = product; // Store globally for variant selection
-
-            let productImage = product.images.length > 0 ? product.images[0] : "{{ 'product1.png' | asset_url }}";
-
-            let optionsHTML = "";
-            product.options.forEach((option, index) => {
-                let optionValues = [...new Set(product.variants.map(variant => variant.options[index]))];
-
-                optionsHTML += `<label>${option}: 
-                    <select class="product-option" data-option-name="${option}">
-                        <option value="">Select ${option}</option>
-                        ${optionValues.map(value => `<option>${value}</option>`).join("")}
-                    </select>
-                </label>`;
-            });
-
-            document.querySelector(".my-modal-content").innerHTML = `
-                <div class="modal-image">
-                    <img src="${productImage}" alt="${product.title}">
-                </div>
-                <h2>${product.title}</h2>
-                <p>${product.body_html}</p>
-                <p class="modal-price"><strong>Price:</strong> <span>${product.variants[0].price}</span></p>
-                ${optionsHTML}
-                <button class="add-to-cart-btn" onclick="addToCart()">
-                    Add to Cart
-                </button>
-            `;
-
-            // Show Modal
-            modal.classList.add("active");
-        })
-        .catch(error => {
-            console.error("Error fetching product data:", error);
-        });
-}
-
-// Function to Add to Cart with Selected Variant
-function addToCart() {
-    let variantId = document.querySelector(".add-to-cart-btn").getAttribute("data-variant-id");
-
-    if (!variantId) {
-        alert("Please select all options before adding to cart.");
-        return;
-    }
-
-    fetch("/cart/add.js", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id: variantId, quantity: 1 })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert("Product added to cart!");
+    // Close Modal
+    document.querySelector(".modal-close").addEventListener("click", function () {
         closeQuickView();
-    })
-    .catch(error => console.error("Error adding to cart:", error));
-}
+    });
 
-// Function to Close Quick View Modal
-function closeQuickView() {
-    let modal = document.getElementById("quickViewModal");
-    if (modal) {
-        modal.classList.remove("active");
+    function closeQuickView() {
+        modalOverlay.classList.remove("active");
+        document.body.style.overflow = "auto";
     }
-}
+
+    // Setup Event Listeners for Option Selection
+    function setupVariantSelection() {
+        let option1 = document.querySelectorAll(".mc-color");
+        let option2 = document.querySelectorAll(".mc-select");
+        let selectMain = document.querySelectorAll("select[name='id'] option");
+
+        if (option1) {
+            option1.forEach((option) => {
+                if (option.checked) {
+                    selectedOptions["option1"] = option.value;
+                }
+                option.addEventListener("change", updateSelectedOption);
+            });
+        }
+
+        if (option2) {
+            option2.forEach((option) => {
+                option.addEventListener("change", updateSelectedOption);
+            });
+        }
+
+        form = document.getElementById(`product-form-${productId}`);
+        if (form) form.addEventListener("submit", formSubmitHandler);
+    }
+
+    // Handle Option Selection
+    function updateSelectedOption(event) {
+        let optionName = event.target.name;
+        let optionValue = event.target.value;
+
+        selectedOptions[optionName] = optionValue;
+
+        console.log("Selected Options:", selectedOptions);
+
+        updateSelectedVariant();
+    }
+
+    // Match Selected Options to Correct Variant
+    function updateSelectedVariant() {
+        let productVariants = window.currentProduct.variants;
+
+        let selectedVariantTitle = Object.values(selectedOptions).join(" / ").toLowerCase();
+
+        let matchedVariant = productVariants.find(variant => variant.title.toLowerCase() === selectedVariantTitle);
+
+        if (matchedVariant) {
+            console.log("Matched Variant:", matchedVariant);
+            document.querySelector(".modal-price span").innerText = matchedVariant.price;
+            document.querySelector(".add-to-cart-btn").setAttribute("data-variant-id", matchedVariant.id);
+        } else {
+            console.log("No matching variant found.");
+        }
+    }
+
+    // Add to Cart
+    function addToCart() {
+        let variantId = document.querySelector(".add-to-cart-btn").getAttribute("data-variant-id");
+
+        if (!variantId) {
+            alert("Please select all options before adding to cart.");
+            return;
+        }
+
+        let prodObject = {
+            items: [{ id: variantId, quantity: 1 }],
+            sections: "cart-drawer,cart-icon-bubble",
+        };
+
+        fetch("/cart/add.js", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify(prodObject),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Added to Cart:", data);
+                closeQuickView();
+                updateCart(data);
+            })
+            .catch(error => {
+                console.log("Error in adding to cart", error);
+            });
+    }
+
+    // Update Cart UI
+    function updateCart(data) {
+        const sectionData = data.sections;
+
+        document.querySelector("#CartDrawer").innerHTML = new DOMParser()
+            .parseFromString(sectionData["cart-drawer"], "text/html")
+            .querySelector("#CartDrawer").innerHTML;
+
+        document.querySelector("#cart-icon-bubble").innerHTML = new DOMParser()
+            .parseFromString(sectionData["cart-icon-bubble"], "text/html")
+            .getElementById("shopify-section-cart-icon-bubble").innerHTML;
+
+        document.querySelector("#cart-icon-bubble").click();
+    }
+});
