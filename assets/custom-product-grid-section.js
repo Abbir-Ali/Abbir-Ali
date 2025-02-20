@@ -1,22 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("Quick View script loaded.");
-
-    // Event Delegation for dynamically loaded elements
-    document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("circle")) {
-            let productId = event.target.getAttribute("data-product-id");
-            let productHandle = event.target.getAttribute("data-product-handle");
-
-            console.log("Clicked on + icon!"); // Debugging
-            console.log("Product ID:", productId);
-            console.log("Product Handle:", productHandle);
-
-            openQuickView(productHandle);
-        }
-    });
-});
-
-// Function to Open Quick View Modal & Fetch Product Data
 function openQuickView(productHandle) {
     let modal = document.getElementById("quickViewModal");
 
@@ -33,6 +14,9 @@ function openQuickView(productHandle) {
             let product = data.product;
 
             console.log("Fetched product:", product);
+
+            // Check if images exist before using them
+            let productImage = product.images.length > 0 ? product.images[0] : "{{ 'product1.png' | asset_url }}";
 
             // Generate product options HTML
             let optionsHTML = "";
@@ -51,7 +35,7 @@ function openQuickView(productHandle) {
             // Update modal content dynamically
             document.querySelector(".my-modal-content").innerHTML = `
                 <div class="modal-image">
-                    <img src="${product.images[0]}" alt="${product.title}">
+                    <img src="${productImage}" alt="${product.title}">
                 </div>
                 <h2>${product.title}</h2>
                 <p>${product.body_html}</p>
@@ -68,12 +52,4 @@ function openQuickView(productHandle) {
         .catch(error => {
             console.error("Error fetching product data:", error);
         });
-}
-
-// Function to Close Quick View Modal
-function closeQuickView() {
-    let modal = document.getElementById("quickViewModal");
-    if (modal) {
-        modal.classList.remove("active");
-    }
 }
