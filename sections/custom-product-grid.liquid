@@ -1,6 +1,17 @@
+{{ custom-product-grid-section.css | asset_url | stylesheet_tag }}
+
+
 {% schema %}
   {
-    "name": "Section name",
-    "settings": []
+    "name": "Custom Product Grid",
+    "class": "custom-product-grid-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "Heading",
+        "label": "Heading",
+        "default":"Tisso Vision In The Wild"
+      }
+    ]
   }
 {% endschema %}
