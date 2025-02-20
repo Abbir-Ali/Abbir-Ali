@@ -1,117 +1,101 @@
-{{ 'custom-header-section.css' | asset_url | stylesheet_tag }}
+{{'custom-header-section.css' |  asset_url |  stylesheet_tag }}
+<script src="{{ 'custom-header-section.js' | asset_url }}" defer="defer"></script>
 
-<div class="header-banner">
-  <div class="chs-top-bar">
-    <div class="chs-logo-wrapper">
-      <h1 class="h3 chs-logo">
-        <a style="text-decoration:none; display:block;" href="/">{{ section.settings.logo_text }}</a>
-      </h1>
+<div class="header-section-container">
+    <div class="chs-top-bar">
+        <div class="menu-icon mobile">
+            <div class="open-icon">
+               {% render 'open-icon' %}
+            </div>
+            <div class="close-icon">
+               {% render 'close-icon' %}
+            </div>
+        </div>
+        <div class="mobile-menu mobile">
+            <div class="mobile-menu-content">
+              <p class="h5 chs-top-text">Find the ideal gift for your loved ones.</p>
+              <a href="#" class="chs-button-yellow">
+                 CHOOSE GIFT
+                 {% render 'arrow-icon' %}
+              </a>
+            </div>
+        </div>
+        <div class="chs-logo-wrapper">
+           <h1 class="h3 chs-logo">
+            <a style="text-decoration:none;display:block;"href="/">TISSUE VISION</a>
+          </h1>
+        </div>
+        <div class="chs-sub-heading">
+           <p class="h5 chs-top-text desktop">Find the ideal gift for your loved ones.</p>
+        </div>
+        <div class="chs-button-wrapper desktop">
+          <a href="#" class="chs-button-yellow">
+            CHOOSE GIFT
+            {% render 'arrow-icon' %}
+          </a>
+        </div>
     </div>
-
-    <div class="chs-sub-heading">
-      <p class="h5 chs-top-text desktop">{{ section.settings.top_bar_text }}</p>
+    <div class="chs-image-content">
+        <div class="chs-content-desktop desktop-flex">
+            <h3 class="h1 chs-h1">The Gift Guide</h3>
+            <p class="chs-para h3">Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to
+            delight your loved ones this holiday season.</p>
+            <a href="#" class="chs-button-black">
+                SHOP NOW
+                {% render 'arrow-icon' %}
+            </a>
+        </div>
+        <div class="chs-content-mobile mobile-flex">
+            <h3 class="h1 chs-h1">The Gift Guide</h3>
+            <p class="chs-para h5">Discover Joy: Your Ultimate Holiday Gift Destination.</p>
+        </div>
+        <div class="chs-image">
+          {% if section.settings.main-image != blank %}
+            {% assign img_height = section.settings.main-image.width | divided_by: section.settings.main-image.aspect_ratio %}
+            {{ section.settings.main-image | image_url: width:section.settings.main-image.width | image_tag:
+             width: section.settings.main-image.width,
+             height: img_height,
+             class: 'main-image',
+             fetchpriority: 'high'
+            }}
+          {% else %}
+            <div class="placeholder-svg">
+              {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endif %}
+            <div class="chs-button-black-wrapper mobile">
+                <a href="#" class="chs-button-black">
+                    SHOP NOW
+                    {% render 'arrow-icon' %}
+                </a>
+            </div>
+           
+        </div>
+       
     </div>
-
-    <div class="chs-button-wrapper desktop">
-      <a class="chs-button-yellow" href="#">{{ section.settings.choose_gift_text }}</a>
+    <div class="chs-bottom-bar">
+        <p class="h5 chs-bottom-text">SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>
     </div>
-  </div>
-
-  <div class="chs-image-content">
-    <div class="chs-content-desktop desktop-flex"> 
-      <h3 class="h1 chs-h1">{{ section.settings.subheading_text }}</h3>
-      <p class="chs-para h3">{{ section.settings.subheading_paragraph }}</p>
-      <a class="chs-button-black" href="#">{{ section.settings.main_button_text }}</a>
-    </div>
-
-    <div class="chs-content-mobile mobile-flex">
-      <h3 class="chs-h1">{{ section.settings.subheading_text }}</h3>
-      <p class="chs-para h5">{{ section.settings.subheading_paragraph }}</p>
-    </div>
-
-    <div class="chs-image">
-      {% if section.settings.desktop_image != blank %}
-        {{ section.settings.desktop_image | image_url: width: section.settings.desktop_image.width | image_tag: 
-          width: section.settings.desktop_image.width, 
-          class: "main-image desktop",
-          fetchpriority: "high"
-        }}
-      {% endif %}
-
-      {% if section.settings.mobile_image != blank %}
-        {{ section.settings.mobile_image | image_url: width: section.settings.mobile_image.width | image_tag: 
-          width: section.settings.mobile_image.width, 
-          class: "main-image mobile",
-          fetchpriority: "high"
-        }}
-      {% endif %}
-
-      <div class="chs-button-black-wrapper mobile">
-        <a href="#" class="chs-button-black">{{ section.settings.main_button_text }}</a>
-        {% render "right-arrow"  %}
-      </div>
-    </div>
-  </div>
-
- 
-
 </div>
 
 {% schema %}
 {
-  "name": "New Header Banner",
+  "name": "t:sections.header-banner.name",
+  "class": "header-banner-section",
   "settings": [
     {
-      "type": "text",
-      "id": "logo_text",
-      "label": "Logo Text",
-      "default": "Tisso Vision"
-    },
-    {
-      "type": "text",
-      "id": "top_bar_text",
-      "label": "Top Bar Middle Text",
-      "default": "Find the ideal gift for your loved ones."
-    },
-    {
-      "type": "text",
-      "id": "choose_gift_text",
-      "label": "Choose Gift Button Text",
-      "default": "Choose Gift"
-    },
-    {
-      "type": "text",
-      "id": "subheading_text",
-      "label": "Subheading Title",
-      "default": "The Gift Guide"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading_paragraph",
-      "label": "Subheading Paragraph",
-      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
-    },
-    {
-      "type": "text",
-      "id": "main_button_text",
-      "label": "Main Button Text",
-      "default": "Shop Now"
+       "type":"header",
+       "content": "Header Part"
     },
     {
       "type": "image_picker",
-      "id": "desktop_image",
-      "label": "Desktop Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "mobile_image",
-      "label": "Mobile Image"
+      "id": "main-image",
+      "label": "Main Image"
     }
   ],
   "presets": [
     {
-      "name": "New Header Banner",
-      "category": "Header"
+      "name": "t:sections.header-banner.presets.name"
     }
   ]
 }
