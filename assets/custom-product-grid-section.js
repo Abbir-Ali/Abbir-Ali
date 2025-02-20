@@ -96,9 +96,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function closeQuickView() {
-        let modal = document.getElementById("quickViewModal");
-        if (modal) {
-            modal.classList.remove("active");
-        }
+    let modal = document.getElementById("quickViewModal");
+    if (modal) {
+        modal.classList.remove("active");
     }
+}
+
 });
