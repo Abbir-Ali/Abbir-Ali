@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     if (modalOverlay) modalOverlay.classList.add("active");
 
-                 let productImage = product.image && product.image.src ? product.image.src : "{{ 'product1.png' | asset_url }}";
+                 // let productImage = product.image && product.image.src ? product.image.src : "{{ 'product1.png' | asset_url }}";
 
 
 
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     modalContainer.innerHTML = `
                         <div class="modal-image">
-                            <img src="${productImage}" alt="${product.title}">
+                            
                         </div>
                         <h2>${product.title}</h2>
                         <p>${product.body_html}</p>
