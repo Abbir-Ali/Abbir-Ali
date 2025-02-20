@@ -138,6 +138,7 @@
 .chs-logo-wrapper{
     flex: 1 1 60%;
     text-align: center;
+  background:#F7F7F7;
     }
   
   .chs-logo-wrapper h1 a {
