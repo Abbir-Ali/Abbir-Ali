@@ -95,11 +95,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error adding to cart:", error));
     }
 
-    function closeQuickView() {
+ 
+
+});
+
+   function closeQuickView() {
     let modal = document.getElementById("quickViewModal");
     if (modal) {
         modal.classList.remove("active");
     }
 }
-
-});
