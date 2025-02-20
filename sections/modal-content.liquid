@@ -111,11 +111,11 @@
     >
       <span>
         {%- if product.selected_or_first_available_variant == null -%}
-          {{ 'products.product.unavailable' | t }}
+          Unavailable
         {%- elsif product.selected_or_first_available_variant.available == false -%}
-          {{ 'products.product.sold_out' | t }}
+          Sold Out
         {%- else -%}
-          {{ 'products.product.add_to_cart' | t }}
+         Add To Cart
         {%- endif -%}
       </span>
       {% render 'arrow-icon' %}
