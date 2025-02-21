@@ -16,7 +16,7 @@ if (closeIcon) {
   closeIcon.addEventListener("click", function (e) {
     e.stopPropagation();
     this.style.display = "none";
-    if (mobileMenu) mobileMenu.classList.remove("active"); // 🔧 Fixed: Should remove "active" instead of adding it
+    if (mobileMenu) mobileMenu.classList.remove("active"); // Fixed: Should remove "active" instead of adding it
     document.body.style.overflow = "scroll";
     if (openIcon) openIcon.style.display = "block";
   });
