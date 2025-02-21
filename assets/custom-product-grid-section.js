@@ -130,7 +130,7 @@ function addingToCart(varId) {
     (option1Value == "black" || option1Value == "Black") &&
     (option2Value == "M" || option2Value == "m")
   ) {
-    prodObject.items.push({ id: 42018349908056, quantity: 1 });
+    prodObject.items.push({ id: 8085424799884, quantity: 1 });
   }
 
   fetch("/cart/add.js", {
