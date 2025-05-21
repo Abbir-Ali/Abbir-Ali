@@ -1,0 +1,154 @@
+<div class="page-width">
+  <div class="before-after-slider">
+    <div class="before-image">
+      <img alt="{{ section.settings.before_image_alt }}" src="">
+      <span class="label before-label">{{ section.settings.before_label }}</span>
+    </div>
+    <div class="after-image">
+      <img alt="{{ section.settings.after_image_alt }}" src="">
+      <span class="label after-label">{{ section.settings.after_label }}</span>
+    </div>
+    <div class="slider-handle"></div>
+  </div>
+</div>
+
+<style>
+.before-after-slider {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  margin: 20px auto;
+}
+
+.before-image, .after-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.before-image img, .after-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.after-image {
+  width: 50%;
+}
+
+.slider-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  background: #fff;
+  cursor: ew-resize;
+  z-index: 10;
+}
+
+.slider-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.slider-handle::before {
+  content: '↔';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  color: #333;
+  z-index: 11;
+}
+
+.label {
+  position: absolute;
+  bottom: 20px;
+  padding: 5px 10px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.before-label {
+  left: 20px;
+}
+
+.after-label {
+  right: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .before-after-slider {
+    height: 300px;
+  }
+}
+</style>
+
+<a data-encoded-tag-name="script" data-encoded-tag-value="JTBBZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCclMkMlMjBmdW5jdGlvbigpJTIwJTdCJTBBJTIwJTIwY29uc3QlMjBzbGlkZXIlMjAlM0QlMjBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCcuYmVmb3JlLWFmdGVyLXNsaWRlcicpJTNCJTBBJTIwJTIwY29uc3QlMjBiZWZvcmVJbWFnZSUyMCUzRCUyMGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJy5iZWZvcmUtaW1hZ2UnKSUzQiUwQSUyMCUyMGNvbnN0JTIwYWZ0ZXJJbWFnZSUyMCUzRCUyMGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJy5hZnRlci1pbWFnZScpJTNCJTBBJTIwJTIwY29uc3QlMjBzbGlkZXJIYW5kbGUlMjAlM0QlMjBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCcuc2xpZGVyLWhhbmRsZScpJTNCJTBBJTIwJTIwJTBBJTIwJTIwbGV0JTIwaXNEcmFnZ2luZyUyMCUzRCUyMGZhbHNlJTNCJTBBJTIwJTIwJTBBJTIwJTIwJTJGJTJGJTIwSGFuZGxlJTIwbW91c2UlMjBldmVudHMlMEElMjAlMjBzbGlkZXJIYW5kbGUuYWRkRXZlbnRMaXN0ZW5lcignbW91c2Vkb3duJyUyQyUyMHN0YXJ0RHJhZyklM0IlMEElMjAlMjBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdtb3VzZW1vdmUnJTJDJTIwZHJhZyklM0IlMEElMjAlMjBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdtb3VzZXVwJyUyQyUyMGVuZERyYWcpJTNCJTBBJTIwJTIwJTBBJTIwJTIwJTJGJTJGJTIwSGFuZGxlJTIwdG91Y2glMjBldmVudHMlMEElMjAlMjBzbGlkZXJIYW5kbGUuYWRkRXZlbnRMaXN0ZW5lcigndG91Y2hzdGFydCclMkMlMjBzdGFydERyYWcpJTNCJTBBJTIwJTIwZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcigndG91Y2htb3ZlJyUyQyUyMGRyYWcpJTNCJTBBJTIwJTIwZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcigndG91Y2hlbmQnJTJDJTIwZW5kRHJhZyklM0IlMEElMjAlMjAlMEElMjAlMjBmdW5jdGlvbiUyMHN0YXJ0RHJhZyhlKSUyMCU3QiUwQSUyMCUyMCUyMCUyMGlzRHJhZ2dpbmclMjAlM0QlMjB0cnVlJTNCJTBBJTIwJTIwJTIwJTIwZS5wcmV2ZW50RGVmYXVsdCgpJTNCJTBBJTIwJTIwJTdEJTBBJTIwJTIwJTBBJTIwJTIwZnVuY3Rpb24lMjBkcmFnKGUpJTIwJTdCJTBBJTIwJTIwJTIwJTIwaWYlMjAoIWlzRHJhZ2dpbmcpJTIwcmV0dXJuJTNCJTBBJTIwJTIwJTIwJTIwJTBBJTIwJTIwJTIwJTIwbGV0JTIwY2xpZW50WCUzQiUwQSUyMCUyMCUyMCUyMGlmJTIwKGUudHlwZSUyMCUzRCUzRCUzRCUyMCd0b3VjaG1vdmUnKSUyMCU3QiUwQSUyMCUyMCUyMCUyMCUyMCUyMGNsaWVudFglMjAlM0QlMjBlLnRvdWNoZXMlNUIwJTVELmNsaWVudFglM0IlMEElMjAlMjAlMjAlMjAlN0QlMjBlbHNlJTIwJTdCJTBBJTIwJTIwJTIwJTIwJTIwJTIwY2xpZW50WCUyMCUzRCUyMGUuY2xpZW50WCUzQiUwQSUyMCUyMCUyMCUyMCU3RCUwQSUyMCUyMCUyMCUyMCUwQSUyMCUyMCUyMCUyMGNvbnN0JTIwc2xpZGVyUmVjdCUyMCUzRCUyMHNsaWRlci5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKSUzQiUwQSUyMCUyMCUyMCUyMGNvbnN0JTIwcG9zaXRpb24lMjAlM0QlMjAoY2xpZW50WCUyMC0lMjBzbGlkZXJSZWN0LmxlZnQpJTIwJTJGJTIwc2xpZGVyUmVjdC53aWR0aCUzQiUwQSUyMCUyMCUyMCUyMCUwQSUyMCUyMCUyMCUyMCUyRiUyRiUyMExpbWl0JTIwcG9zaXRpb24lMjBiZXR3ZWVuJTIwMCUyMGFuZCUyMDElMEElMjAlMjAlMjAlMjBjb25zdCUyMGxpbWl0ZWRQb3NpdGlvbiUyMCUzRCUyME1hdGgubWF4KDAlMkMlMjBNYXRoLm1pbigxJTJDJTIwcG9zaXRpb24pKSUzQiUwQSUyMCUyMCUyMCUyMCUwQSUyMCUyMCUyMCUyMCUyRiUyRiUyMFVwZGF0ZSUyMHRoZSUyMHdpZHRoJTIwb2YlMjB0aGUlMjBhZnRlciUyMGltYWdlJTIwYW5kJTIwcG9zaXRpb24lMjBvZiUyMHRoZSUyMGhhbmRsZSUwQSUyMCUyMCUyMCUyMGFmdGVySW1hZ2Uuc3R5bGUud2lkdGglMjAlM0QlMjAlNjAlMjQlN0JsaW1pdGVkUG9zaXRpb24lMjAqJTIwMTAwJTdEJTI1JTYwJTNCJTBBJTIwJTIwJTIwJTIwc2xpZGVySGFuZGxlLnN0eWxlLmxlZnQlMjAlM0QlMjAlNjAlMjQlN0JsaW1pdGVkUG9zaXRpb24lMjAqJTIwMTAwJTdEJTI1JTYwJTNCJTBBJTIwJTIwJTdEJTBBJTIwJTIwJTBBJTIwJTIwZnVuY3Rpb24lMjBlbmREcmFnKCklMjAlN0IlMEElMjAlMjAlMjAlMjBpc0RyYWdnaW5nJTIwJTNEJTIwZmFsc2UlM0IlMEElMjAlMjAlN0QlMEElN0QpJTNCJTBB"></a>
+
+{% schema %}
+{
+  "name": "Before After Slider",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before Image"
+    },
+    {
+      "type": "text",
+      "id": "before_image_alt",
+      "label": "Before Image Alt Text",
+      "default": "Before Image"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Before Label",
+      "default": "Before"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After Image"
+    },
+    {
+      "type": "text",
+      "id": "after_image_alt",
+      "label": "After Image Alt Text",
+      "default": "After Image"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "After Label",
+      "default": "After"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before After Slider",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
