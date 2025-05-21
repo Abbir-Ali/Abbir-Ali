@@ -2,11 +2,27 @@
   <div class="before-after-container">
     <div class="img-comp-container">
       <div class="img-comp-img">
-        <img alt="{{ section.settings.before_image_alt }}" src="">
+        {% if section.settings.before_image != blank %}
+          {{ section.settings.before_image | image_url: width: 1500 | image_tag: 
+            loading: 'lazy',
+            class: 'before-image-tag',
+            alt: section.settings.before_image_alt | escape
+          }}
+        {% else %}
+          <div class="placeholder-image">Please select a Before image</div>
+        {% endif %}
         <div class="before-label">{{ section.settings.before_label }}</div>
       </div>
       <div class="img-comp-img img-comp-overlay">
-        <img alt="{{ section.settings.after_image_alt }}" src="">
+        {% if section.settings.after_image != blank %}
+          {{ section.settings.after_image | image_url: width: 1500 | image_tag: 
+            loading: 'lazy',
+            class: 'after-image-tag',
+            alt: section.settings.after_image_alt | escape
+          }}
+        {% else %}
+          <div class="placeholder-image">Please select an After image</div>
+        {% endif %}
         <div class="after-label">{{ section.settings.after_label }}</div>
       </div>
     </div>
@@ -38,6 +54,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  color: #666;
 }
 
 .img-comp-overlay {
