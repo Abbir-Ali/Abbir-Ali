@@ -87,11 +87,30 @@
         "after_image_alt": "After Image",
         "after_label": "After"
       }
+    },
+    "174834100294dc6b91": {
+      "type": "apps",
+      "blocks": {
+        "tint_star_rating_YjKPmB": {
+          "type": "shopify://apps/tint/blocks/star_rating/cffacc65-d88e-4766-b65e-a4641eea920a",
+          "settings": {
+            "product": "accordion-pleated-dress",
+            "colour": "#ff0000"
+          }
+        }
+      },
+      "block_order": [
+        "tint_star_rating_YjKPmB"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "image_banner",
     "featured_collection",
-    "before_after_slider_6hdX7d"
+    "before_after_slider_6hdX7d",
+    "174834100294dc6b91"
   ]
 }
