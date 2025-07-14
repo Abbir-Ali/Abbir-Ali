@@ -143,7 +143,7 @@
                             {{- item.product.title | escape -}}
                           </a>
                           {% if item.properties._free_gift == 'true' %}
-                            <p class="tag">🎁 Free Gift</p>
+                            <p class="tag">🎁 1x Free Gift</p>
                           {% endif %}
 
                           {%- if item.original_price != item.final_price -%}
@@ -281,6 +281,7 @@
                           role="cell"
                           headers="CartDrawer-ColumnQuantity"
                         >
+                          {% unless item.properties._free_gift == 'true' %}
                           <quantity-popover>
                             <div class="cart-item__quantity-wrapper quantity-popover-wrapper">
                               <div class="quantity-popover-container{% if has_qty_rules or has_vol_pricing %} quantity-popover-container--hover{% endif %}">
@@ -442,6 +443,7 @@
                               </span>
                             </div>
                           </quantity-popover>
+                            {% endunless %}
                         </td>
                       </tr>
                     {%- endfor -%}
