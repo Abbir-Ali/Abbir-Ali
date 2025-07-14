@@ -105,7 +105,7 @@
                       <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
 
                       {% if item.properties._free_gift == 'true' %}
-                        <p class="tag">🎁 Free Gift</p>
+                        <p class="tag">🎁 1x Free Gift</p>
                       {% endif %}
 
                       {%- if item.original_price != item.final_price -%}
@@ -229,6 +229,7 @@
                       endif
                     -%}
                     <td class="cart-item__quantity{% if has_qty_rules or has_vol_pricing %} cart-item__quantity--info{% endif %}">
+                      {% unless item.properties._free_gift == 'true' %}
                       <quantity-popover>
                         <div class="cart-item__quantity-wrapper quantity-popover-wrapper">
                           <label class="visually-hidden" for="Quantity-{{ item.index | plus: 1 }}">
@@ -389,6 +390,7 @@
                           </span>
                         </div>
                       </quantity-popover>
+                        {% endunless %}
                     </td>
 
                     <td class="cart-item__totals right small-hide">
