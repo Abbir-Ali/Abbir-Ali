@@ -103,6 +103,10 @@
                         
                       {%- endif -%}
 
+                   {% if item.properties._free_gift == 'true' %}
+                    <p class="tag">🎁 Free Gift</p>
+                   {% endif %}
+
                       <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
 
                       {%- if item.original_price != item.final_price -%}
