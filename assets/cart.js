@@ -284,3 +284,51 @@ if (!customElements.get('cart-note')) {
     }
   );
 }
+
+(() => {
+  const FREE_VARIANT_ID = 43853033439372;
+  const THRESHOLD = 50000; // $500 in cents
+  const key = `gift-added-${FREE_VARIANT_ID}`;
+
+  subscribe(PUB_SUB_EVENTS.cartUpdate, () => {
+    // Skip if already added in this session
+    if (sessionStorage.getItem(key) === '1') return;
+
+    fetch('/cart.js')
+      .then(res => res.json())
+      .then(cart => {
+        const subtotal = cart.items_subtotal_price;
+        const hasGift = cart.items.some(item => item.variant_id === FREE_VARIANT_ID);
+
+        if (subtotal >= THRESHOLD && !hasGift) {
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [{ id: FREE_VARIANT_ID, quantity: 1 }] })
+          })
+            .then(() => {
+              console.log('[Free Gift] Added successfully');
+              sessionStorage.setItem(key, '1');
+
+              // Trigger cart drawer refresh
+              publish(PUB_SUB_EVENTS.cartUpdate, { source: 'free-gift' });
+
+              // Fallback reload if not updated in DOM
+              setTimeout(() => {
+                const found = [...document.querySelectorAll('.cart-item')].some(el =>
+                  el.innerHTML.includes(String(FREE_VARIANT_ID))
+                );
+                if (!found) location.reload();
+              }, 1500);
+            })
+            .catch(err => {
+              console.error('[Free Gift] Error adding item:', err);
+            });
+        }
+      })
+      .catch(err => {
+        console.error('[Free Gift] Failed to read cart:', err);
+      });
+  });
+})();
+
