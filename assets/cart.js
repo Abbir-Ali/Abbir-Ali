@@ -289,20 +289,36 @@ if (!customElements.get('cart-note')) {
   const FREE_VARIANT_ID = 44294188400780;
   const THRESHOLD = 50000; // $500 in cents
   const key = `gift-added-${FREE_VARIANT_ID}`;
+  const FREE_GIFT_PROP = '_free_gift';
 
   function syncGiftLogic() {
     fetch('/cart.js')
       .then(res => res.json())
       .then(cart => {
         const subtotal = cart.items_subtotal_price;
-        const giftLine = cart.items.find(item => item.variant_id === FREE_VARIANT_ID);
+
+        const giftLine = cart.items.find(item =>
+          item.variant_id === FREE_VARIANT_ID &&
+          item.properties &&
+          item.properties[FREE_GIFT_PROP] === 'true'
+        );
 
         if (subtotal >= THRESHOLD && !giftLine) {
-          // Add the gift
+          // Add the gift with a line item property
           fetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: [{ id: FREE_VARIANT_ID, quantity: 1 }] })
+            body: JSON.stringify({
+              items: [
+                {
+                  id: FREE_VARIANT_ID,
+                  quantity: 1,
+                  properties: {
+                    [FREE_GIFT_PROP]: 'true'
+                  }
+                }
+              ]
+            })
           })
             .then(() => {
               console.log('[Free Gift] Added');
@@ -315,7 +331,7 @@ if (!customElements.get('cart-note')) {
         }
 
         if (subtotal < THRESHOLD && giftLine) {
-          // Remove the gift
+          // Remove the gift item
           fetch('/cart/change.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -343,10 +359,10 @@ if (!customElements.get('cart-note')) {
     syncGiftLogic();
   });
 
-  // Initial check in case cart already loaded
   window.addEventListener('DOMContentLoaded', () => {
     syncGiftLogic();
   });
 })();
+
 
 
