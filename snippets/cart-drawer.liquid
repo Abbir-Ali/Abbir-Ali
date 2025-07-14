@@ -142,6 +142,9 @@
                           <a href="{{ item.url }}" class="cart-item__name h4 break">
                             {{- item.product.title | escape -}}
                           </a>
+                          {% if item.properties._free_gift == 'true' %}
+                            <p class="tag">🎁 Free Gift</p>
+                          {% endif %}
 
                           {%- if item.original_price != item.final_price -%}
                             <div class="cart-item__discounted-prices">
