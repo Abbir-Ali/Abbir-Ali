@@ -286,7 +286,7 @@ if (!customElements.get('cart-note')) {
 }
 
 (() => {
-  const FREE_VARIANT_ID = 43853033439372;
+  const FREE_VARIANT_ID = 44294188400780;
   const THRESHOLD = 50000; // $500 in cents
   const key = `gift-added-${FREE_VARIANT_ID}`;
 
